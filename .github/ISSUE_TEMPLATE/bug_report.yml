@@ -1,12 +1,12 @@
-name: TEMPLATE-PROJECT-TITLE Bug Report
+name: Serial Proxies Bug Report
 description: |-
-  Report an issue with the TEMPLATE-PROJECT-TITLE firmware provided by this repository,
+  Report an issue with the Serial Proxies firmware provided by this repository,
   the web installer and the provided OTA updates.
 body:
   - type: markdown
     attributes:
       value: |
-        This issue form is for reporting bugs with the TEMPLATE-PROJECT-TITLE firmware that is compiled and released
+        This issue form is for reporting bugs with the Serial Proxies firmware that is compiled and released
         from this repository. This includes flashing the firmware from the ESPHome projects page and the OTA updates that are provided.
 
         **This is NOT for:**
