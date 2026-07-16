@@ -13,7 +13,7 @@ esphome:
 # In this case it is the core yaml file that does not contain the extra things
 # that are provided by this factory yaml file as the user does not need these once adopted.
 dashboard_import:
-  package_import_url: github://TEMPLATE-REPO-OWNER/TEMPLATE-REPO-NAME/example-device/example-device.yaml
+  package_import_url: github://esphome/serial-proxies/example-device/example-device.yaml
 
 # Sets up Bluetooth LE (Only on ESP32) to allow the user
 # to provision wifi credentials to the device.
@@ -34,4 +34,4 @@ update:
   - platform: http_request
     name: None
     id: update_http_request
-    source: https://firmware.esphome.io/TEMPLATE-FIRMWARE-DIR/example-device/manifest.json
+    source: https://firmware.esphome.io/serial-proxy/example-device/manifest.json
