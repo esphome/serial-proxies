@@ -2,8 +2,8 @@
 # with one directory per real device, each containing:
 #   <device>/<device>.yaml          - the core config users adopt via the dashboard
 #   <device>/<device>.factory.yaml  - the factory wrapper built and shipped by CI
-# Remember to update the `files:` list in .github/workflows/build.yml when
-# adding or renaming devices.
+# CI builds every `*.factory.yaml` in the repository automatically — no
+# workflow edits needed when adding or renaming devices.
 esphome:
   name: example-device
   friendly_name: Example Device
