@@ -1,18 +1,13 @@
-# TEMPLATE: This is an example device configuration. Replace this directory
-# with one directory per real device, each containing:
-#   <device>/<device>.yaml          - the core config users adopt via the dashboard
-#   <device>/<device>.factory.yaml  - the factory wrapper built and shipped by CI
-# CI builds every `*.factory.yaml` in the repository automatically — no
-# workflow edits needed when adding or renaming devices.
 esphome:
-  name: example-device
-  friendly_name: Example Device
+  # Limited to 24 characters as the mac suffix is added below
+  name: atom-lite-rs485
+  friendly_name: M5Stack Atom Lite RS485
   # Automatically add the mac address to the name
   # so you can use a single firmware for all devices
   name_add_mac_suffix: true
 
 esp32:
-  board: esp32dev
+  board: m5stack-atom
   framework:
     type: esp-idf
 
@@ -38,6 +33,23 @@ captive_portal:
 
 network:
   enable_ipv6: true
+
+# UART connected to the ATOMIC RS485 Base (SKU: A131)
+# via the bottom header of the Atom Lite.
+uart:
+  - id: rs485_uart
+    tx_pin: GPIO19
+    rx_pin: GPIO22
+    baud_rate: 9600
+
+# Expose the RS-485 port to API clients (e.g. Home Assistant).
+# The client can reconfigure baud rate, data bits, stop bits
+# and parity at runtime.
+serial_proxy:
+  - id: rs485_proxy
+    uart_id: rs485_uart
+    name: RS-485
+    port_type: RS485
 
 button:
   - platform: factory_reset

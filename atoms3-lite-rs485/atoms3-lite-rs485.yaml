@@ -1,0 +1,66 @@
+esphome:
+  # Limited to 24 characters as the mac suffix is added below
+  name: atoms3-lite-rs485
+  friendly_name: M5Stack AtomS3 Lite RS485
+  # Automatically add the mac address to the name
+  # so you can use a single firmware for all devices
+  name_add_mac_suffix: true
+
+esp32:
+  board: m5stack-atoms3
+  framework:
+    type: esp-idf
+
+# To be able to get logs from the device via serial and api.
+logger:
+
+# API is a requirement of the dashboard import.
+api:
+  id: api_id
+  encryption:   # Uses key set by Home Assistant
+
+ota:
+  - platform: esphome
+    id: ota_esphome
+
+wifi:
+  # Set up a wifi access point using the device name above
+  ap:
+
+# In combination with the `ap` this allows the user
+# to provision wifi credentials to the device.
+captive_portal:
+
+network:
+  enable_ipv6: true
+
+# UART connected to the ATOMIC RS485 Base (SKU: A131)
+# via the bottom header of the AtomS3 Lite.
+uart:
+  - id: rs485_uart
+    tx_pin: GPIO6
+    rx_pin: GPIO5
+    baud_rate: 9600
+
+# Expose the RS-485 port to API clients (e.g. Home Assistant).
+# The client can reconfigure baud rate, data bits, stop bits
+# and parity at runtime.
+serial_proxy:
+  - id: rs485_proxy
+    uart_id: rs485_uart
+    name: RS-485
+    port_type: RS485
+
+button:
+  - platform: factory_reset
+    id: factory_reset_button
+    name: "Factory Reset"
+    entity_category: diagnostic
+    disabled_by_default: true
+
+  - platform: restart
+    id: restart_button
+    name: "Restart"
+    entity_category: config
+    disabled_by_default: true
+    icon: "mdi:restart"

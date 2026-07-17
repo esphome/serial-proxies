@@ -36,7 +36,8 @@ body:
     attributes:
       label: Which device are you using?
       options:
-        - example-device
+        - atom-lite-rs485
+        - atoms3-lite-rs485
 
   - type: input
     id: version
