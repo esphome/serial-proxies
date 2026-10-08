@@ -1,0 +1,109 @@
+esphome:
+  # Limited to 24 characters as the mac suffix is added below
+  name: atoms3u-usb-uart
+  friendly_name: M5Stack AtomS3U USB UART
+  # Automatically add the mac address to the name
+  # so you can use a single firmware for all devices
+  name_add_mac_suffix: true
+
+esp32:
+  variant: esp32s3
+  framework:
+    type: esp-idf
+
+# To be able to get logs from the device via api.
+# The USB data lines are used as the UART below, so the logger
+# is moved off the default USB Serial/JTAG port.
+logger:
+  hardware_uart: UART1
+
+# API is a requirement of the dashboard import.
+api:
+  id: api_id
+  encryption:   # Uses key set by Home Assistant
+
+ota:
+  - platform: esphome
+    id: ota_esphome
+
+wifi:
+  # Set up a wifi access point using the device name above
+  ap:
+
+# In combination with the `ap` this allows the user
+# to provision wifi credentials to the device.
+captive_portal:
+
+network:
+  enable_ipv6: true
+
+# UART on the data lines of the USB-A plug (3.3V TTL levels).
+# By default TX is on D+ (GPIO20) and RX is on D- (GPIO19).
+# The "Swap TX and RX" switch below swaps them at runtime.
+uart:
+  - id: usb_uart
+    tx_pin:
+      number: GPIO20
+      id: usb_d_plus_pin
+    rx_pin:
+      number: GPIO19
+      id: usb_d_minus_pin
+    baud_rate: 9600
+
+# Expose the UART to API clients (e.g. Home Assistant).
+# The client can reconfigure baud rate, data bits, stop bits
+# and parity at runtime.
+serial_proxy:
+  - id: usb_uart_proxy
+    uart_id: usb_uart
+    name: USB UART
+    port_type: TTL
+
+script:
+  - id: set_uart_pins
+    mode: queued
+    parameters:
+      swapped: bool
+    then:
+      - lambda: |-
+          if (swapped) {
+            id(usb_uart).set_tx_pin(id(usb_d_minus_pin));
+            id(usb_uart).set_rx_pin(id(usb_d_plus_pin));
+          } else {
+            id(usb_uart).set_tx_pin(id(usb_d_plus_pin));
+            id(usb_uart).set_rx_pin(id(usb_d_minus_pin));
+          }
+          // Reinstalls the UART driver, which releases the old pins
+          // before routing the new ones.
+          id(usb_uart).load_settings(false);
+
+switch:
+  - platform: template
+    id: swap_tx_rx_switch
+    name: "Swap TX and RX"
+    icon: "mdi:swap-horizontal"
+    entity_category: config
+    optimistic: true
+    restore_mode: RESTORE_DEFAULT_OFF
+    on_turn_on:
+      - script.execute:
+          id: set_uart_pins
+          swapped: true
+    on_turn_off:
+      - script.execute:
+          id: set_uart_pins
+          swapped: false
+
+button:
+  - platform: factory_reset
+    id: factory_reset_button
+    name: "Factory Reset"
+    entity_category: diagnostic
+    disabled_by_default: true
+
+  - platform: restart
+    id: restart_button
+    name: "Restart"
+    entity_category: config
+    disabled_by_default: true
+    icon: "mdi:restart"
