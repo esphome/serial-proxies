@@ -8,6 +8,13 @@ If a device is not included here it may have a suitable configuration in the [ES
 
 - [M5Stack Atom Lite](https://docs.m5stack.com/en/core/ATOM%20Lite) with [ATOMIC RS485 Base](https://docs.m5stack.com/en/atom/Atomic%20RS485%20Base) — [`atom-lite-rs485`](atom-lite-rs485/atom-lite-rs485.yaml) — serial port `RS-485`
 - [M5Stack AtomS3 Lite](https://docs.m5stack.com/en/core/AtomS3%20Lite) with [ATOMIC RS485 Base](https://docs.m5stack.com/en/atom/Atomic%20RS485%20Base) — [`atoms3-lite-rs485`](atoms3-lite-rs485/atoms3-lite-rs485.yaml) — serial port `RS-485`
+- [M5Stack AtomS3U](https://docs.m5stack.com/en/core/AtomS3U) - [`atoms3u-usb-uart`](atoms3u-usb-uart/atoms3u-usb-uart.yaml) - serial port `USB UART`
+
+## M5Stack AtomS3U
+
+The AtomS3U uses the data lines of its USB-A plug as a 3.3V TTL UART, not as a USB device. TX is on D+ and RX is on D-. Turn on the `Swap TX and RX` switch to swap them.
+
+Once flashed, the AtomS3U no longer shows up as a USB serial device. Update it over the air, or put it into download mode to flash it over USB.
 
 ## Connecting to the serial port
 
