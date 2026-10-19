@@ -14,7 +14,7 @@ If a device is not included here it may have a suitable configuration in the [ES
 
 The AtomS3U uses the data lines of its USB-A plug as a 3.3V TTL UART, not as a USB device. TX is on D+ and RX is on D-. Turn on the `Swap TX and RX` switch to swap them.
 
-Once flashed, the AtomS3U no longer shows up as a USB serial device. Update it over the air, or put it into download mode to flash it over USB.
+Until it has Wi-Fi credentials, the AtomS3U stays a USB serial device, so you can set up Wi-Fi over USB with Improv serial and read its logs. Once it is provisioned, the USB data lines become the UART and it no longer shows up as a USB device. Update it over the air from then on, or put it into download mode to flash it over USB.
 
 ## Connecting to the serial port
 
