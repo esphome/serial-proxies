@@ -17,9 +17,13 @@ dashboard_import:
 
 # Sets up Bluetooth LE (Only on ESP32) to allow the user
 # to provision wifi credentials to the device.
-# Improv via serial is not available as the USB data lines are used as the UART.
 esp32_improv:
   authorizer: none
+
+# Sets up the improv via serial client for Wi-Fi provisioning.
+# Only available until the device is provisioned, after which the
+# USB data lines are used as the UART.
+improv_serial:
 
 # Used to pull OTA updates
 http_request:
