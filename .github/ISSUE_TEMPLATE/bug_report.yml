@@ -38,6 +38,7 @@ body:
       options:
         - atom-lite-rs485
         - atoms3-lite-rs485
+        - atoms3u-usb-uart
 
   - type: input
     id: version
