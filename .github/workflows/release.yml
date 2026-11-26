@@ -27,7 +27,7 @@ jobs:
     # Patches the draft release's manifest assets with the final release
     # notes, then publishes it — all by release id, immune to the
     # draft-by-tag lookup and draft-untagging API pitfalls.
-    uses: esphome/workflows/.github/workflows/publish-draft-release.yml@b2c0cffae477d81175c67e6a44651a9bc2b49f6f  # 2026.11.0
+    uses: esphome/workflows/.github/workflows/publish-draft-release.yml@6e7c96fd2dbf04dda9061c35bfdd9754adc57bbb  # 2026.11.2
     with:
       tag: ${{ inputs.tag }}
     secrets: inherit
